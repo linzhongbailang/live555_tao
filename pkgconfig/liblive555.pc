@@ -1,0 +1,9 @@
+prefix=/usr/local/live555
+libdir=${prefix}/lib
+includedir=${prefix}/include
+ 
+Name: liblive555
+Description: live555 library
+Version: 1.0.0
+Libs: -L${libdir} -lliveMedia -lgroupsock  -lBasicUsageEnvironment  -lUsageEnvironment  
+Cflags: -I${includedir}/BasicUsageEnvironment -I${includedir}/groupsock -I${includedir}/liveMedia -I${includedir}/UsageEnvironment
