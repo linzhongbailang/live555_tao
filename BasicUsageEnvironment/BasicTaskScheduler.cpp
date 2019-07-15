@@ -75,9 +75,9 @@ void BasicTaskScheduler::SingleStep(unsigned maxDelayTime) {
   fd_set readSet = fReadSet; // make a copy for this select() call
   fd_set writeSet = fWriteSet; // ditto
   fd_set exceptionSet = fExceptionSet; // ditto
-  //timeval ts;
-  //gettimeofday(&ts,NULL);
-  //printf("seconds:%ld   useconds:%ld \n",ts.tv_sec,ts.tv_usec);
+  timeval ts;
+  gettimeofday(&ts,NULL);
+  printf("seconds:%ld   useconds:%ld \n",ts.tv_sec,ts.tv_usec);
 
   DelayInterval const& timeToDelay = fDelayQueue.timeToNextAlarm();
   struct timeval tv_timeToDelay;
