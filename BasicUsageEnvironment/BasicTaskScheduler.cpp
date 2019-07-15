@@ -26,9 +26,17 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include <unix.h>
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+#include <time.h>
+#include <sys/time.h>
 ////////// BasicTaskScheduler //////////
 
 BasicTaskScheduler* BasicTaskScheduler::createNew(unsigned maxSchedulerGranularity) {
+    printf("BasicTaskScheduler* BasicTaskScheduler::createNew %d\n",maxSchedulerGranularity);
 	return new BasicTaskScheduler(maxSchedulerGranularity);
 }
 
@@ -67,6 +75,9 @@ void BasicTaskScheduler::SingleStep(unsigned maxDelayTime) {
   fd_set readSet = fReadSet; // make a copy for this select() call
   fd_set writeSet = fWriteSet; // ditto
   fd_set exceptionSet = fExceptionSet; // ditto
+  //timeval ts;
+  //gettimeofday(&ts,NULL);
+  //printf("seconds:%ld   useconds:%ld \n",ts.tv_sec,ts.tv_usec);
 
   DelayInterval const& timeToDelay = fDelayQueue.timeToNextAlarm();
   struct timeval tv_timeToDelay;
@@ -86,7 +97,7 @@ void BasicTaskScheduler::SingleStep(unsigned maxDelayTime) {
     tv_timeToDelay.tv_sec = maxDelayTime/MILLION;
     tv_timeToDelay.tv_usec = maxDelayTime%MILLION;
   }
-
+   
   int selectResult = select(fMaxNumSockets, &readSet, &writeSet, &exceptionSet, &tv_timeToDelay);
   if (selectResult < 0) {
 #if defined(__WIN32__) || defined(_WIN32)
